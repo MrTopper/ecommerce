@@ -5,6 +5,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title></title>
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 	<link href="/assets/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 	<script src="/assets/bootstrap.bundle.min.js"></script>
   <style type="text/css">
@@ -55,11 +56,9 @@
           </a>
         </li>
 
-        <li class="list-group-item py-3" style="font-size: 18px;">
-          <a href="" class="text-dark page-link">
+        <li class="list-group-item py-3 logout" style="font-size: 18px;cursor:pointer;">
             <i class="fa-solid fa-power-off ms-4 me-2"></i>
             Logout
-          </a>
         </li>
 
           </ul>
@@ -76,5 +75,55 @@
 </div>
 
 @yield('script')
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+@if(session()->has('success'))
+<script>
+		Toastify({
+			text: "{{session('success')}}",
+			duration: 3000,
+      position: "center",
+      style: {
+    background:"#fff",
+    border:"1px solid #ddd",
+    borderRadius:"10px",
+    padding:"20px",
+    color:"#555",
+    },
+			}).showToast();
+	</script>
+@endif
+@if(session()->has('error'))
+<script>
+		Toastify({
+			text: "{{session('error')}}",
+			duration: 3000,
+      position: "center",
+      style: {
+    background:"#fff",
+    border:"1px solid #ddd",
+    borderRadius:"10px",
+    padding:"20px",
+    color:"#555",
+    },
+			}).showToast();
+	</script>
+@endif
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script type="text/javascript">
+  $('.logout').click(function(){
+      swal({
+  title: "Are you sure to Logout?",
+  icon: "warning",
+  buttons: true,
+  dangerMode: true,
+})
+.then((willDelete) => {
+  if (willDelete) {
+   location.href="{{url('admin/logout')}}";
+  }
+})
+});
+</script>
 </body>
 </html>

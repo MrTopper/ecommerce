@@ -16,7 +16,10 @@ use App\Http\Controllers\Admin\PageController;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
-Route::group(['prefix' => 'admin','namespace' => 'Admin'], function(){
+Route::get('admin/login',[PageController::class,'showLogin']);
+Route::post('admin/login',[PageController::class,'Login']);
+Route::group(['prefix' => 'admin','namespace' => 'Admin','middleware'=>['Admin']], function(){
     Route::get('/',[PageController::class,'showDashboard']);
-    Route::get('/login',[PageController::class,'showLogin']);
+    Route::get('/logout',[PageController::class,'logout']);
+    
 });
